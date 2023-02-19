@@ -48,9 +48,10 @@ public class MainController {
 
         if (filter != null && !filter.isEmpty()) {
             requests = repository.findByTag(filter);
-        } else {
+        }else {
             requests = repository.findAll();
         }
+
 
         model.put("requests", requests);
 

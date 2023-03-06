@@ -1,6 +1,6 @@
 package org.olegmell.controller;
 
-import org.olegmell.domain.Role;
+import org.olegmell.domain.Types.Role;
 import org.olegmell.domain.User;
 import org.olegmell.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import java.util.Map;
 @Controller
 public class RegistrationController {
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
 
     @GetMapping("/registration")
     public String registration() {
@@ -23,7 +23,7 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(User user, Map<String, Object> model) {
-        User userFromDb = repository.findByUsername(user.getUsername());
+        User userFromDb = userRepository.findByUsername(user.getUsername());
 
         if (userFromDb != null) {
             model.put("message", "User exists!");
@@ -32,7 +32,7 @@ public class RegistrationController {
 
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
-        repository.save(user);
+        userRepository.save(user);
 
         return "redirect:/login";
     }
